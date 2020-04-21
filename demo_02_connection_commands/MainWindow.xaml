@@ -1,0 +1,56 @@
+﻿<Window x:Class="demo_02_connection_commands.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:demo_02_connection_commands"
+        mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Load Data" Click="LoadData_Click"/>
+        </Menu>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <ListView Grid.Column="0" x:Name="lvEmployee"/>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Id : "/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Prénom : "/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Nom de famille : "/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Téléphone : "/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text=""/>
+
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding EmployeeId}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding LastName}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding HomePhone}"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" Text=""/>
+                
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>

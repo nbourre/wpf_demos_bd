@@ -24,7 +24,9 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <ListView Grid.Column="0" x:Name="lvEmployee"/>
+            <ListView Grid.Column="0" x:Name="lvEmployee" 
+                      SelectedItem="{Binding SelectedEmployee}"
+                      ItemsSource="{Binding Employees}"/>
             <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
@@ -44,12 +46,14 @@
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Téléphone : "/>
                 <TextBlock Grid.Row="4" Grid.Column="0" Text=""/>
 
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding EmployeeId}"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding LastName}"/>
-                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding HomePhone}"/>
-                <TextBlock Grid.Row="4" Grid.Column="1" Text=""/>
-                
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SelectedEmployee.EmployeeId}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedEmployee.FirstName}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedEmployee.LastName}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedEmployee.HomePhone}"/>
+
+                <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="3">
+                    <Button Content="Update" Click="UpdateEmployee_Click"/>
+                </StackPanel>
             </Grid>
         </Grid>
     </DockPanel>

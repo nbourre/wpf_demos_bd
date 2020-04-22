@@ -1,8 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using App.Models;
+using demo_02_connection_commands.VM;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace demo_02_connection_commands
@@ -10,11 +16,32 @@ namespace demo_02_connection_commands
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         DataTable dataTable;
-        bool dataLoaded = false;
-        List<string> fullNames = new List<string>();
+
+        private Employee selectedEmployee;
+
+        public Employee SelectedEmployee
+        {
+            get { return selectedEmployee; }
+            set {
+                selectedEmployee = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private ObservableCollection<Employee> employees = new ObservableCollection<Employee>();
+
+        public ObservableCollection<Employee> Employees 
+        { 
+            get => employees;
+            set {
+                employees = value;
+                OnPropertyChanged();
+            }
+        }
 
         public MainWindow()
         {
@@ -24,7 +51,6 @@ namespace demo_02_connection_commands
         private void LoadData_Click(object sender, RoutedEventArgs e)
         {
             var connString = ConfigurationManager.ConnectionStrings["connString"].ConnectionString;
-
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -37,7 +63,6 @@ namespace demo_02_connection_commands
                         {
                             dataTable = new DataTable();
                             dataTable.Load(dataReader);
-
                         }
 
                     }
@@ -52,19 +77,67 @@ namespace demo_02_connection_commands
                 }
             }
 
-            foreach (DataColumn column  in dataTable.Columns)
+            foreach (DataColumn column in dataTable.Columns)
             {
                 Debug.WriteLine(column.ColumnName);
             }
 
-            foreach (DataRow row in dataTable.Rows) {
-                string fullName = $"{row["LastName"]}, {row["FirstName"]}";
+            Employees.Clear();
 
-                fullNames.Add(fullName);
+            foreach (DataRow row in dataTable.Rows)
+            {
+
+                var emp = new Employee();
+
+                emp.EmployeeId = Convert.ToInt32(row["EmployeeId"]);
+                emp.FirstName = row["FirstName"].ToString();
+                emp.LastName = row["LastName"].ToString();
+                emp.HomePhone = row["HomePhone"].ToString();
+
+                Employees.Add(emp);
             }
-
-            lvEmployee.ItemsSource = fullNames;
             
         }
+
+        private void UpdateEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            var connString = ConfigurationManager.ConnectionStrings["connString"].ConnectionString;
+            string query =
+                $"UPDATE Employees " +
+                $"SET FirstName = '{SelectedEmployee.FirstName}', " +
+                $"LastName = '{SelectedEmployee.LastName}', " +
+                $"HomePhone = '{SelectedEmployee.HomePhone}' " +
+                $"WHERE EmployeeId = {SelectedEmployee.EmployeeId}";
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand(query, conn))
+                {
+                    try
+                    {
+                        conn.Open();
+                        sqlCommand.ExecuteNonQuery();
+
+                    }
+                    catch
+                    {
+                        MessageBox.Show("An error occured!");
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
     }
 }

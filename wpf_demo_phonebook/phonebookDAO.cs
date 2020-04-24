@@ -49,7 +49,7 @@ namespace wpf_demo_phonebook
                 $"FROM [Contacts] " +
                 $"WHERE ContactID = @_id ";
 
-            SqlParameter[] parameters = new SqlParameter[2];
+            SqlParameter[] parameters = new SqlParameter[1];
             parameters[0] = new SqlParameter("@_id", SqlDbType.Int);
             parameters[0].Value = _id;
 

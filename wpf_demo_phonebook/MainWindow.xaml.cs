@@ -20,11 +20,10 @@ namespace wpf_demo_phonebook
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
-
-            DataContext = this;
         }
     }
 }

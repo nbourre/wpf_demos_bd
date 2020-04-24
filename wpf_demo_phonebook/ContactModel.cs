@@ -4,7 +4,7 @@ using System.Text;
 
 namespace wpf_demo_phonebook
 {
-    class ContactModel
+    public class ContactModel
     {
         public int ContactID { get; set; }
         public string FirstName { get; set; }

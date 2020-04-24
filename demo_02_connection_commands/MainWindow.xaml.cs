@@ -117,7 +117,6 @@ namespace demo_02_connection_commands
                     {
                         conn.Open();
                         sqlCommand.ExecuteNonQuery();
-
                     }
                     catch
                     {
@@ -129,6 +128,32 @@ namespace demo_02_connection_commands
                     }
                 }
             }
+        }
+
+        private static int? RunNonQueryCommand(string queryString, string connectionString)
+        {
+            int? result = null;
+
+            using (SqlConnection connection = new SqlConnection(
+                       connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                { 
+                    command.Connection.Open();
+                    result = command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "An error occured");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+
+            return result;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -23,6 +23,8 @@ namespace wpf_demo_phonebook
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = this;
         }
     }
 }

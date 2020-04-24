@@ -5,8 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpf_demo_phonebook"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" MinHeight="300" Width="800">
+    <StackPanel>
+        
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Recherche : "/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Prénom : "/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Nom de famille : "/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Email : "/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Téléphone : "/>
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Celluaire : "/>
+            <TextBlock Grid.Row="7" Grid.Column="0" Text="Identifiant : "/>
 
-    </Grid>
+            <Button  Grid.Row="0" Grid.Column="1" Content="Recherche" />
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedContact.FirstName}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedContact.LastName}"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedContact.Email}"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedContact.Phone}"/>
+            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedContact.Mobile}"/>
+            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding SelectedContact.ContactID}"/>
+
+            
+            
+        </Grid>
+    </StackPanel>
 </Window>

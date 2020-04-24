@@ -74,7 +74,7 @@ namespace wpf_demo_phonebook
         public int ExecutInsertQuery(string _query, SqlParameter[] parameters)
         {
             SqlCommand command = new SqlCommand();
-            int result = 0;
+            int result = -1;
 
             try
             {
